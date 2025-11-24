@@ -11,13 +11,26 @@ interface StreakTableProps {
 
 export const StreakTable: React.FC<StreakTableProps> = ({ rows, referenceWinRate, onSelectWinRate }) => {
   const activeRowRef = useRef<HTMLTableRowElement>(null);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to the active row when it changes
+  // Auto-scroll to the active row within the container ONLY (prevents page jump)
   useEffect(() => {
-    if (activeRowRef.current) {
-      activeRowRef.current.scrollIntoView({
+    if (activeRowRef.current && tableContainerRef.current) {
+      const container = tableContainerRef.current;
+      const row = activeRowRef.current;
+
+      // Calculate the position to center the row inside the container
+      // offsetTop is relative to the closest positioned ancestor (the table or container)
+      const rowTop = row.offsetTop;
+      const rowHeight = row.clientHeight;
+      const containerHeight = container.clientHeight;
+
+      // Desired scroll position: Row in the middle
+      const scrollTo = rowTop - (containerHeight / 2) + (rowHeight / 2);
+
+      container.scrollTo({
+        top: scrollTo,
         behavior: 'smooth',
-        block: 'center',
       });
     }
   }, [referenceWinRate]);
@@ -43,7 +56,10 @@ export const StreakTable: React.FC<StreakTableProps> = ({ rows, referenceWinRate
       
       {/* Scrollable area needs overflow-hidden for the scrollbar to stay inside rounded corners, 
           but since we removed it from parent, we apply rounded-b-xl here */}
-      <div className="overflow-y-auto flex-1 custom-scrollbar rounded-b-xl relative z-10">
+      <div 
+        ref={tableContainerRef}
+        className="overflow-y-auto flex-1 custom-scrollbar rounded-b-xl relative z-10"
+      >
         <table className="w-full text-left border-collapse">
           <thead className="bg-slate-900 sticky top-0 shadow-sm">
             <tr>
