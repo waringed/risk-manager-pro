@@ -42,7 +42,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-200 pb-12">
+    <div className="min-h-screen bg-slate-900 text-slate-200 pb-12 flex flex-col">
       {/* Header */}
       <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-28 flex items-center justify-between">
@@ -57,7 +57,7 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
         
         {/* Branded Tool Name - Centered */}
         <div className="mb-10 flex flex-col items-center text-center">
@@ -133,8 +133,15 @@ const App: React.FC = () => {
 
       </main>
 
-      {/* Mobile Footer spacing */}
-      <div className="h-12 md:hidden"></div>
+      {/* Footer */}
+      <footer className="max-w-7xl mx-auto px-4 py-8 text-center border-t border-slate-800/30 w-full mt-4">
+        <p className="text-xs text-slate-500 font-medium">
+          &copy;2025 Waring Trading Academy. Todos los derechos reservados.
+          <span className="block sm:inline sm:ml-1 mt-1 sm:mt-0">
+             App creada con ❤️ por <a href="https://mercamocion.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-emerald-400 transition-colors underline decoration-slate-700 hover:decoration-emerald-400">mercamocion.com</a>
+          </span>
+        </p>
+      </footer>
     </div>
   );
 };
